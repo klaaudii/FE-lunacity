@@ -1,0 +1,16 @@
+<a href="#" [routerLink]="['../films', film.id]"><img [src]="film.bgImagePath"   alt="image {{film.title}}">
+<div class="container film-main-info ">
+  <div class="row">
+    <div class="film-text col-md-7 col-sm-12">
+          <span class="film-genres"  *ngFor="let genre of film.genres, let i = index">
+            {{genre.name}}{{i === film.genres.length -1 ? '' : ',&nbsp;' }}
+          </span>
+      <h2 class="film-title">{{film.title}}</h2>
+      <p class="film-description">{{film.description}}</p>
+      <span class="film-rating" [title]="film.rating.explanation">{{film.rating.name}}</span>
+      <a class="film-trailer" [href]="film.bgImagePath" ><i class="fa fa-play"></i><span>TRAILER</span></a>
+    </div>
+
+  </div>
+</div>
+</a>

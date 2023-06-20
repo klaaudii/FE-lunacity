@@ -1,0 +1,199 @@
+<div class="modal-header ticket-header">
+  <h4 class="modal-title" style="display: inline" >REZERVÁCIA | {{film.title}} |
+ {{screening.date.toLocaleString('sk-SK')}}  {{screening.time.toString().slice(0,-3)}} </h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+
+</div>
+
+
+<app-registration-tabs [activatedTab]="activatedTab"></app-registration-tabs>
+<div class="modal-body">
+
+<!--    prvy krok-->
+    <div *ngIf="activatedTab==0" class="col-12">
+      <table class="ticket-table">
+        <tbody>
+          <tr>
+          <th>TYP</th>
+          <th>CENA</th>
+          <th>MNOŽSTVO</th>
+          </tr>
+        <tr class="TT-1">
+          <td><span>DOSPELÝ</span></td>
+          <td><span>{{screening.price}} EUR</span></td>
+          <td>
+            <select #adults (change)="changeNumAdults(adults.value)" name="ticket-select-1" [value]="nAdultTickets.value">
+              <option value=0>0</option>
+              <option value=1>1</option>
+              <option value=2>2</option>
+              <option value=3>3</option>
+              <option value=4>4</option>
+              <option value=5>5</option>
+              <option value=6>6</option>
+              <option value=7>7</option>
+              <option value=8>8</option>
+              <option value=9>9</option>
+              <option value=10>10</option>
+            </select>
+          </td>
+        </tr>
+          <tr class="TT-2">
+            <td><span>DETSKÝ</span></td>
+            <td><span>{{screening.price * 0.6}} EUR</span></td>
+            <td>
+              <select #children (change)="changeNumChildren(children.value)" name="ticket-select-2" [value]="nChildTickets.value">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </td>
+          </tr>
+            <tr class="TT-3">
+              <td><span>ŠTUDENT/SENIOR</span></td>
+              <td><span>{{screening.price * 0.8}} EUR</span></td>
+              <td>
+                <select #olds (change)="changeNumSeniors(olds.value)" name="ticket-select-3" [value]="nSeniorTickets.value">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+      <div class="btn-text-right">
+      <button type="button" class="btn cinema-btn" [ngClass]="{ 'disabled': nTickets.value == 0}" (click)="increaseTabIndex()" >VYBRAŤ MIESTA</button>
+      </div>
+    </div>
+
+
+<!--druhy krok-->
+    <div *ngIf="activatedTab==1" class="col-12">
+        <h4 class="mt-3">Prosím, zvoľte Vaše miesta: {{nTickets.value - selectedTickets.size}}</h4>
+      <div class="seat-container" [style.height.px]="(getAuditoriumRowsCount()+4.5)*40" >
+        <img  src="assets/screen.png" >
+        <div class="seat seat-help"
+          *ngFor="let item of [].constructor(getAuditoriumRowsCount()); let i=index"
+          [style.top.px]="(i+2.5)*40"
+          [style.left.px]="0">
+          <span class="seat-icon">{{ i + 1 }}</span>
+        </div>
+        <div
+          (click)="onClickSeat(ticket)"
+          *ngFor="let ticket of tickets"
+          class="seat"
+          [ngClass]="{'seat-available' : ticket.state != 1}"
+          [style.background-color]="ticket.state == 1 ? 'grey' : selectedTickets.has(ticket) ? 'orange' : 'forestgreen' "
+          [style.top.px]="(ticket.seat.x+1.5)*40"
+          [style.left.px]="(ticket.seat.y+3)*40">
+          <span class="seat-icon">{{ ticket.seat.id }}</span>
+        </div>
+        <div class="seat-explanation">
+      <div class="seat-info" style="background-color: forestgreen; bottom: 5px ">
+
+      </div><span>voľné</span>
+        <div class="seat-info" style="background-color: orange">
+
+        </div><span>rezervované</span>
+        <div class="seat-info" style="background-color: gray">
+
+        </div><span>nedostupné</span>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button type="button" class="btn cinema-btn-back"  (click)="decreaseTabIndex()" >SPäť</button>
+        <button type="button" class="btn cinema-btn"  [ngClass]="{ 'disabled': nTickets.value != selectedTickets.size}" (click)="makeReservation()" >vytvoriť rezerváciu</button>
+      </div>
+    </div>
+
+
+<!--treti krok-->
+  <div class="mt-3" *ngIf="!showConfirmation && !showSeatsAreTaken && !showReservationWasCanceled && activatedTab==2" class="col-12">
+    <h4 class="mt-3">Vami zvolené vstupenky budú blokované 10 minút. Ak nedokončíte rezerváciu do 10 minút, budú Vaše vstupenky uvoľnené ďalším zákazníkom. </h4 >
+    <br> <h4 class="mt-1"> Zostávajúci čas  {{ formatTime(remainingTime!)}}</h4>
+
+    <form (submit)="confirmReservation()" [formGroup]="form" #ngForm="ngForm">
+
+
+        <div class="mb-3">
+          <label class="form-label" for="firstNameInput">Meno</label>
+          <input type="text" id="firstNameInput" class="form-control" formControlName="firstName"
+                 [class.is-invalid]="isInvalid('firstName')"
+          >
+          <div class="invalid-feedback">Zadajte meno</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="lastNameInput">Priezvisko</label>
+          <input type="text" id="lastNameInput" class="form-control" formControlName="lastName"
+                 [class.is-invalid]="isInvalid('lastName')"
+          >
+          <div class="invalid-feedback">Zadajte priezvisko</div>
+        </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="emailInput">E-mail</label>
+        <input type="text" id="emailInput" class="form-control" formControlName="email"
+               [class.is-invalid]="isInvalid('email')"
+        >
+        <div class="invalid-feedback">Zadajte email v správnom tvare</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="phoneInput">Tel. číslo</label>
+        <input type="text" id="phoneInput" class="form-control" formControlName="phoneNumber"
+               [class.is-invalid]="isInvalid('phoneNumber')"
+        >
+        <div class="invalid-feedback">Zadajte tel. číslo v správnom tvare</div>
+      </div>
+
+        <div class="buttons">
+          <button type="button" class="btn cinema-btn-back"  (click)="cancelReservation()" >SPäť</button>
+          <button type="button" class="btn cinema-btn"
+                  [ngClass]="{ 'disabled': form.invalid}"
+                  (click)="confirmReservation()" >POTVRDIŤ</button>
+        </div>
+
+    </form>
+
+
+
+
+  </div>
+
+
+  <div class="mt-3" *ngIf="showConfirmation">
+    <h4 class="mt-3">Rezervácia prebehla úspešne.  Ďakujeme!</h4><br>
+    <span>Vaše vstupenky si môžete zakúpiť na pokladni najneskôr 30 minút pred predstavením.</span>
+  </div>
+
+  <div class="mt-3" *ngIf="showSeatsAreTaken && activatedTab == 2">
+    <h4 class="mt-3">Ospravedlňujeme sa! Dané miesta už nie sú k dispozícii, prosím zvoľte si iné.</h4>
+  </div>
+
+  <div class="mt-3" *ngIf="showReservationWasCanceled  && activatedTab == 2">
+    <h4 class="mt-3">Rezervácia bola zrušená. Zvolené miesta si teraz môže ktokoľvek rezervovať.</h4>
+    <div class="buttons">
+      <button type="button" class="btn cinema-btn-back"  (click)="giveNewChanceToMakeReservation()" >SPäť</button>
+    </div>
+
+  </div>
+</div>
+

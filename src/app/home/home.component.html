@@ -1,0 +1,11 @@
+<ngb-carousel *ngIf="films$ | async as films" [showNavigationArrows]="false"  [pauseOnHover]="false" class="carousel-container">
+  <ng-template ngbSlide *ngFor="let film of films">
+    <div class="carousel-wrapper mx-auto">
+    <app-film-intro [film]="film"></app-film-intro>
+    </div>
+  </ng-template>
+</ngb-carousel>
+
+<img class="scroll-image horizontal-shake" src="https://xenothemes.co.uk/specto/wp-content/themes/specto/images/scroll-arrow.svg">
+
+<app-program></app-program>

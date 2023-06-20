@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item" *ngFor="let tab of tabs; let i = index">
+    <a class="nav-link registration-link"
+       [ngClass]="{ 'active': i === activatedTab, 'disabled': i !== activatedTab }" aria-current="page" >
+      {{tab}}
+    </a>
+  </li>
+</ul>

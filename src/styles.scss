@@ -1,1 +1,562 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/scss/bootstrap';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+.body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+}
+
+.h1, h2, h3, h4 {
+  line-height: 1.4em;
+  margin: 0 0 10px 0;
+}
+
+p {
+  margin: 0 0 5px 0;
+}
+
+a {
+  text-decoration: none;
+  color: #4a4a4a;
+}
+
+ul {
+  padding: 0;
+  display: inline-block;
+  list-style-type: none;
+}
+
+li {
+  display: flex;
+  float: left;
+}
+
+
+// navbar
+.navbar {
+  transition: all 0.5s;
+  line-height: 1.5;
+  color: #545454;
+  .navbar-brand {
+    letter-spacing: .3rem;
+  }
+  .navbar-logo {
+    padding-right: 10px;
+  }
+
+
+}
+
+
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link-after::after {
+  content: '';
+  opacity: 0;
+  transition: all 0.2s;
+  height: 2px;
+  width: 100%;
+  background-color: darkorange;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.nav-link-after:hover::after{
+  opacity: 1;
+}
+
+.navbar-scrolled {
+  .navbar-logo {
+    height: 50px;
+    padding-left: 20px;
+  }
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #101010;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+
+// scroll indicator
+.scroll-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  translate: 0 -100%;
+}
+
+.horizontal-shake{
+  animation: horizontal-shaking 2s infinite;
+}
+
+@keyframes horizontal-shaking {
+  0% { transform: translateX(0) }
+  25% { transform: translateX(3px) }
+  50% { transform: translateX(-3px) }
+  75% { transform: translateX(3px) }
+  100% { transform: translateX(0) }
+}
+
+.carousel-wrapper {
+  width: 100%;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 95vh;
+    background-color: #000;
+    background-position: center;
+    object-fit: cover;
+    filter: brightness(0.3);
+  }
+}
+
+//carousel
+.ngb-carousel {
+  position:relative;
+}
+
+.carousel-indicators {
+  margin: 0;
+  position: absolute;
+  bottom: 10%;
+  left: 13vw;
+  justify-content: left;
+}
+
+.carousel-indicators button {
+  width : 10px!important;
+  background-color: black;
+  height: 10px !important;
+  border-radius: 50% !important
+}
+
+.carousel-indicators .active {
+  width : 10px!important;
+  //background-color: darkorange;
+  height: 10px !important;
+  border-radius: 50% !important
+}
+
+
+.film-main-info {
+  text-shadow: 1px 1px 1px rgba(0,0,0,.004);
+  color: white;
+  position: absolute;
+  top:35%;
+  left: 12.5vw;
+
+
+  .film-rating {
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 48px;
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    margin-right: 8px;
+    text-align: center;
+    color: #fff;
+    border: solid 2px #fff;
+    border-radius: 50%;
+  }
+
+  .film-trailer{
+    background: linear-gradient(to right, #ec7532 0%,#fbbd61 100%);
+    font-size: 13px;
+    font-weight: normal;
+    position: relative;
+    overflow: hidden;
+    width: auto;
+    padding: 12px 24px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #fff;
+    border-width: 2px;
+    border-radius: 30px;
+    margin-left: 15px;
+    .fa {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      vertical-align: middle;
+      color: #fff;
+      font: normal normal normal 14px/1 FontAwesome;
+    }
+    span {
+      position: relative;
+      z-index: 1;
+      color: #fff;
+      margin-left: 8px;
+    }
+  }
+}
+
+
+.film-genres {
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fbbd61;
+}
+.film-title {
+  font-size: 52px;
+  font-weight: 300;
+  padding: 0;
+  letter-spacing: 3px;
+}
+.film-description {
+  padding-bottom: 0px;
+  font-size: 18px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  white-space: pre-wrap;
+}
+
+.program-item {
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #d8d8d8;
+  margin-right: -15px;
+  margin-left: -15px;
+  box-sizing: border-box;
+  color: #717171;
+  font-size: 16px;
+  .film-cover {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  .film-info {
+    float: left;
+  }
+
+  .film-title {
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: #101010;
+  }
+
+  .film-description {
+    color: #717171;
+    font-size: 16px;
+  }
+  a {
+    color: #ec7532;
+    font-size: 12px;
+    position: relative;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .last-info{
+    margin-top: 20px;
+  }
+
+  .screenings {
+    padding: 0;
+  }
+
+
+
+
+
+
+  .more-info{
+    font-size: 12px;
+    text-align: right;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    span {
+      font-size: 13px;
+      font-weight: bold;
+      line-height: 33px;
+      display: inline-block;
+      width: 33px;
+      height: 33px;
+      margin-left: 5px;
+      text-align: center;
+      letter-spacing: 0;
+      color: #fff;
+      border-radius: 50%;
+      background: #4a4a4a;
+    }
+  }
+}
+
+.film-screening{
+
+  background: darkorange;
+  padding: 10px 11px;
+  margin-right: 5px;
+  font-size: 16px;
+  letter-spacing: 0;
+  border-radius: 5px;
+  a {
+    color: #fff;
+  }
+}
+.program-panel {
+  margin-top: 20px;
+  //display: flex;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #d8d8d8;
+  position:relative;
+}
+
+//.week {
+//  position:absolute;
+//  bottom: 0;
+//}
+
+.week-day {
+  font-size: 18px;
+  position: relative;
+  padding: 15px 0;
+  display: block;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  a {
+    padding: 10px 30px 15px 30px;
+  }
+}
+
+.selected {
+  color: #ec7532;
+
+}
+
+
+.film-header {
+  img {
+    width: 100%;
+    height: 50vh;
+    background-color: #000;
+    background-position: center;
+    object-fit: cover;
+    filter: brightness(0.3);
+  }
+
+  .film-main-info {
+    top: 27%;
+  }
+
+  h2 {
+    padding-top: 10px;
+    font-size: 52px;
+  }
+}
+
+.film-all-info{
+  .more-info {
+    margin-top: 10px;
+    color:#fbbd61;
+    font-size: 16px;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d8d8d8;
+    letter-spacing: 1.7px;
+
+  }
+
+  img {
+    width:100%;
+  }
+
+}
+
+
+//.bottom-border {
+//  padding-bottom: 13px;
+//  border-bottom: 3px solid #fbbd61;
+//}
+
+
+.plot {
+  font-size: 24px!important;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: #101010;
+}
+
+.plot-detail {
+  max-width: 80%;
+  color: #717171 !important;
+  font-size: 16px !important;
+}
+
+.plot-image {
+  vertical-align: center;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.no-screening{
+  color: #4a4a4a;
+}
+.screening-times {
+    i {
+      font-size: 12px;
+      font-style: normal;
+      width: 85px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #4a4a4a;
+    }
+}
+
+.seat-container {
+  padding-top: 20px;
+  margin: 15px 0;
+  position: relative;
+  width: 100%;
+  background-color: #efefef;
+  img {
+    width: 100%;
+  }
+}
+
+.seat-explanation {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+}
+
+.seat-info{
+  margin: 0 5px ;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+
+.seat {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+  line-height: 30px;
+  text-align: center;
+  justify-content: center;
+}
+
+.seat-available {
+  cursor: pointer;
+}
+
+.seat-help {
+  background-color: transparent;
+}
+
+
+
+.registration-link {
+  padding: 20px;
+  color: black;
+  cursor: default;
+}
+
+
+.nav-tabs {
+  .active {
+    color: #fbbd61!important;
+  }
+}
+
+
+.modal-body {
+  padding: 40px;
+  padding-top: 0px;
+}
+
+.mat-typography h4 {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  font-family: Roboto, sans-serif;
+  margin: 0;
+}
+
+.modal-header {
+  background-color: #fbbd61;
+  font-weight: bold;
+}
+
+.ticket-table{
+  width: 100%;
+  margin: 20px 0 15px 0;
+  border-width: 0px;
+  border-collapse: collapse;
+
+  tbody {
+    padding: 50px;
+    border-bottom: 2px solid #fbbd61
+  }
+
+  th {
+    border-bottom: 2px solid #fbbd61;
+    background: 0 0!important;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 10px;
+    text-align: left;
+  }
+
+  td {
+    border-bottom: 1px dashed #d3d3d3;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+}
+
+.btn-text-right{
+  text-align: right;
+}
+.buttons{
+  display: flex;
+  justify-content: space-between;
+}
+
+.cinema-btn, .cinema-btn-back {
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.cinema-btn-back{
+  background-color: #e0dddd;
+}
+
+.cinema-btn-back:hover{
+  background-color: #d2d0d0;
+}
+
+.cinema-btn {
+  background-color: darkorange;
+}
+
+.cinema-btn:hover{
+  background-color: #e57f03;
+}
+
+
+.myCustomModalClass .modal-dialog{
+  max-width: 565px;
+  max-height: 500px;
+}
+
+
+
+
+.seat-disabled {
+  cursor: default!important;
+}

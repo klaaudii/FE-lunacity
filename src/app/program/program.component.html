@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row program-panel align-items-end">
+    <div class="col-md-10 py-0 my-0 week align-items-end">
+      <ul class="py-0 my-0" style="display: inline">
+        <li class="week-day nav-link-after" *ngFor="let day of week; let i = index">
+          <a [ngClass]="{'selected': selectedItemIndex === i }"
+             (click)="selectItem(i)"
+             [routerLink]="['/']" [queryParams]="{ date: day.date }">
+            {{day.name}}
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-2 col-sm-10 py-0 my-0">
+      <mat-form-field  class="select-genre py-0 my-0" style="margin-bottom: -1.25em !important; ">
+        <mat-label>Žáner</mat-label>
+        <mat-select (selectionChange)="refresh()" [(ngModel)]="genre">
+          <mat-option [value]="-1">Všetky žánre
+          </mat-option>
+          <mat-option *ngFor="let g of screeningsGenres" [value]="g.id">
+            {{g.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<div>
+  <app-program-item
+    *ngFor="let screeningGroups of screeningsGroups"  [screeningGroup]=screeningGroups > </app-program-item>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

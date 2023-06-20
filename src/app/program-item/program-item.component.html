@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row program-item">
+    <div class="col-md-2 col-sm-3">
+      <a [routerLink]="['../films', screeningGroup.film.id]">
+        <img class="film-cover" [src]="screeningGroup.film.imagePath" [title]="screeningGroup.film.title">
+      </a>
+    </div>
+    <div class="col-md-10 col-sm-9 film-info">
+      <span class="film-genres"  *ngFor="let genre of screeningGroup.film.genres, let i = index">
+            {{genre.name}}{{i === screeningGroup.film.genres.length -1 ? '' : ',&nbsp;' }}
+          </span>
+      <a href="#" [routerLink]="['../films', screeningGroup.film.id]">
+        <h2 class="film-title">{{screeningGroup.film.title}}</h2>
+      </a>
+      <p class="film-description">{{screeningGroup.film.description}}</p>
+      <a href="#" [routerLink]="['../films', screeningGroup.film.id]"> DETAIL ></a>
+      <div class="container">
+        <div class="row last-info">
+          <div class="col-md-8 col-sm-9 screenings">
+
+            <ul>
+              <li *ngFor="let screening of screeningGroup.screenings" class="film-screening" >
+                <a href="#" [routerLink]="['../films', screeningGroup.film.id]">{{screening.time.toString().slice(0, -3)}}</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4 col-sm-3 more-info">
+            {{screeningGroup.film.length}} min
+            <span class="film-rating" [title]="screeningGroup.film.rating.explanation">{{screeningGroup.film.rating.name}}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+  </div>
+</div>
